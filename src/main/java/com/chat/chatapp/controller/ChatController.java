@@ -18,4 +18,10 @@ public class ChatController {
     public String chat(){
         return "chat";
     }
+
+    @MessageMapping("/typing")
+    @SendTo("/topic/typing")
+    public ChatMessage typing(ChatMessage message) {
+        return message;
+    }
 }
