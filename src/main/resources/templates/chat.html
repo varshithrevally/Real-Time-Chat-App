@@ -180,7 +180,12 @@
         color: white;
          font-size: 16px;
         }
-
+        .sender-name {
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: #94a3b8;
+        }
     </style>
 </head>
 
@@ -247,27 +252,31 @@
     }
 
     function showMessage(message) {
-        const chat = document.getElementById('chat');
-        const currentUser = document.getElementById('senderInput').value;
+            const chat = document.getElementById('chat');
+            const currentUser = document.getElementById('senderInput').value;
 
-        const msg = document.createElement('div');
-        msg.classList.add('message');
+            const msg = document.createElement('div');
+            msg.classList.add('message');
 
-        if (message.sender === currentUser) {
-            msg.classList.add('sent');
-        } else {
-            msg.classList.add('received');
-        }
+            const isSent = message.sender === currentUser;
 
-        const time = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+             if (isSent) {
+                msg.classList.add('sent');
+             } else {
+                msg.classList.add('received');
+             }
+             const displayName = isSent ? "You" : message.sender;
 
-        msg.innerHTML = `
-            <div>${message.content}</div>
-            <div class="time">${time}</div>
-        `;
+             const time = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
 
-        chat.appendChild(msg);
-        chat.scrollTop = chat.scrollHeight;
+            msg.innerHTML = `
+                <div class="sender-name">${displayName}</div>
+                <div>${message.content}</div>
+                <div class="time">${time}</div>
+            `;
+
+            chat.appendChild(msg);
+            chat.scrollTop = chat.scrollHeight;
     }
     function updateAvatar(name) {
         const avatar = document.getElementById('avatar');
